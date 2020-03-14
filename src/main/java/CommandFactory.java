@@ -34,7 +34,7 @@ public final class CommandFactory { // the final keyword prevents subclassing of
 
                 case HELP: return new HelpCmd(argumentInput);
                 case EXIT: return new ExitCmd(argumentInput);
-                case ADD: //return new AddCmd(argumentInput);
+                case ADD: return new AddCmd(argumentInput);
                 case LIST: //return new ListCmd(argumentInput);
                 case SEARCH: //return new SearchCmd(argumentInput);
                 case REMOVE: //return new RemoveCmd(argumentInput);

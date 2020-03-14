@@ -68,15 +68,16 @@ public class LibraryFileLoader {
 	 * if no book data has been loaded yet.
 	 */
 	public List<BookEntry> parseFileContent() {
-		List<BookEntry> theBookEntry = new ArrayList<BookEntry>();
+		List<BookEntry> theBookEntry = new ArrayList<>();
 		if(! contentLoaded()) {
+			System.err.println("ERROR: No content loaded before parsing.");
 			return theBookEntry;
 		}
-		for(String i : fileContent) {
+		for(String i : fileContent.subList(1,fileContent.size())) {//assume the first line is a title
 			String[] detailsOfBook = i.split(",");
 			
 			String title = detailsOfBook[0];
-			String[] authors = detailsOfBook[1].split(" ");
+			String[] authors = new String[] {detailsOfBook[1]};//.split(" ");//todo we need a list of authors not all authors in one String show as list
 			float rating = Float.parseFloat(detailsOfBook[2]);
 			String ISBN = detailsOfBook[3];
 			int pages = Integer.parseInt(detailsOfBook[4]);
@@ -84,6 +85,7 @@ public class LibraryFileLoader {
 			BookEntry theBook = new BookEntry(title, authors, rating, ISBN, pages);
 			theBookEntry.add(theBook);
 		}
+
 		return theBookEntry;
 	}
 	
