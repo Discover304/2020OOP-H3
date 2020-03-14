@@ -77,7 +77,7 @@ public class LibraryFileLoader {
 			String[] detailsOfBook = i.split(",");
 			
 			String title = detailsOfBook[0];
-			String[] authors = new String[] {detailsOfBook[1]};//.split(" ");//todo we need a list of authors not all authors in one String show as list
+			String[] authors = new String[] {detailsOfBook[1]};//.split(" ");//todo bug we need a list of authors not all authors in one String show as list
 			float rating = Float.parseFloat(detailsOfBook[2]);
 			String ISBN = detailsOfBook[3];
 			int pages = Integer.parseInt(detailsOfBook[4]);

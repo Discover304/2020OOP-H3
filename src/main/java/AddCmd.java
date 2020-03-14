@@ -2,11 +2,6 @@ import java.nio.file.Path;
 
 public class AddCmd extends LibraryCommand {
 	
-	/**
-	 * this is used to pass the argument
-	 */
-	private final String argumentInput;
-	
 	private Path parsedArgument;
 	
 	/**
@@ -19,7 +14,6 @@ public class AddCmd extends LibraryCommand {
 	 */
 	public AddCmd(String argumentInput) {
 		super(CommandType.ADD, argumentInput);
-		this.argumentInput = argumentInput;
 	}
 	
 	@Override
@@ -40,9 +34,6 @@ public class AddCmd extends LibraryCommand {
 	public void execute(LibraryData data) {
 		if(data == null) {
 			throw new NullPointerException("no entry");
-		}
-		if(parsedArgument == null) {
-			System.err.println("ERROR: No content loaded before parsing.");
 		}
 		data.loadData(parsedArgument);
 	}
