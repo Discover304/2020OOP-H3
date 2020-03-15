@@ -30,6 +30,8 @@ public class RemoveCmd extends LibraryCommand {
 			return false;
 		}
 		
+		argumentInput = argumentInput.trim();
+		
 		String[] parsedInput = new String[2];
 		if(! readStringContents(argumentInput, parsedInput)) {
 			return false;

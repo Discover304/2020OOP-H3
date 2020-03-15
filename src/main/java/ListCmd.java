@@ -20,9 +20,10 @@ public class ListCmd extends LibraryCommand {
 			return false;
 		}
 		
+		argumentInput = argumentInput.trim();
 		boolean result = argumentInput.equals("long") || argumentInput.equals("short") || argumentInput.equals("");
 		if(result) {
-			this.argumentInput = argumentInput;
+			this.argumentInput = argumentInput.trim();
 		}
 		return result;
 	}
