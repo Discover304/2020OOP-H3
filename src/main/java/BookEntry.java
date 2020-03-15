@@ -40,7 +40,7 @@ public class BookEntry {
 		if(title == null || authors == null || ISBN == null) {
 			throw new NullPointerException("no book entry");
 		}
-		if(pages <= 0 || rating < 0 || rating > 5) {//todo can page be 0?
+		if(pages <= 0 || rating < 0 || rating > 5) {
 			throw new IllegalArgumentException("negative entry");
 		}
 		this.title   = title;

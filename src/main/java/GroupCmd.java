@@ -4,6 +4,9 @@ import java.util.*;
 
 public class GroupCmd extends LibraryCommand {
 	
+	/**
+	 * passing argument
+	 */
 	private String argumentInput;
 	
 	/**
@@ -38,7 +41,7 @@ public class GroupCmd extends LibraryCommand {
 	}
 	
 	@Override
-	public void execute(LibraryData data) {//todo this is a total mass
+	public void execute(LibraryData data) {
 		if(data == null || argumentInput == null) {
 			throw new NullPointerException("no entry");
 		}
@@ -60,6 +63,10 @@ public class GroupCmd extends LibraryCommand {
 		}
 	}
 	
+	/**
+	 * show the grouped title list
+	 * @param data the input data
+	 */
 	private void showByTitles(LibraryData data) {
 		String[] sortedTitles = sortTitles(data);
 		
@@ -79,6 +86,12 @@ public class GroupCmd extends LibraryCommand {
 		}
 	}
 	
+	/**
+	 * sorting titles
+	 * @param data data input
+	 *
+	 * @return give back a sorted title list
+	 */
 	private String[] sortTitles(LibraryData data) {
 		ArrayList<String> theTitle = new ArrayList<>();
 		for(BookEntry i : data.getBookData()) {
@@ -89,6 +102,11 @@ public class GroupCmd extends LibraryCommand {
 		return sortedKeyMap;
 	}
 	
+	/**
+	 * todo this may need improvement
+	 * @param grouping
+	 * @param sortedTitles
+	 */
 	private void constructCapitalMap(HashMap<String, ArrayList<String>> grouping, String[] sortedTitles) {
 		
 		//initialise capital and books
@@ -110,6 +128,10 @@ public class GroupCmd extends LibraryCommand {
 		
 	}
 	
+	/**
+	 * show the grouped author list
+	 * @param data input data
+	 */
 	private void showByAuthors(LibraryData data) {
 		String[] sortedAuthors = sortAuthors(data);
 		
@@ -124,6 +146,12 @@ public class GroupCmd extends LibraryCommand {
 		}
 	}
 	
+	/**
+	 * assigning the input data
+	 * @param groupedData the thing that keep data
+	 * @param sortedAuthors the sorted authors used as index
+	 * @param data the input data
+	 */
 	private void grouping(HashMap<String, String[]> groupedData, String[] sortedAuthors, LibraryData data) {
 		
 		HashMap<String, ArrayList<String>> tempGroup = new HashMap<>();
@@ -141,14 +169,20 @@ public class GroupCmd extends LibraryCommand {
 			}
 			String[] temp = tempGroup.get(i).toArray(new String[tempGroup.get(i).size()]);
 			Arrays.sort(temp);
-			groupedData.put(i,temp);
+			groupedData.put(i, temp);
 		}
 	}
 	
+	/**
+	 * sorting authors
+	 * @param data the data input
+	 *
+	 * @return return sorted authors
+	 */
 	private String[] sortAuthors(LibraryData data) {
 		//initialise authors and books
 		HashSet<String> authors = new HashSet<>();
-		for (BookEntry i : data.getBookData()){
+		for(BookEntry i : data.getBookData()) {
 			String[] authorsOfThisBook = i.getAuthors();
 			Collections.addAll(authors, authorsOfThisBook);
 		}

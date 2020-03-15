@@ -36,13 +36,13 @@ public class SearchCmd extends LibraryCommand {
 		
 		boolean noResult = true;
 		for(BookEntry i : data.getBookData()) {
-			if(i.getTitle().toLowerCase().contains(argumentInput.toLowerCase())){
+			if(i.getTitle().toLowerCase().contains(argumentInput.toLowerCase())) {
 				System.out.println(i.getTitle());
-				noResult=false;
+				noResult = false;
 			}
 		}
-		if(noResult){
-			System.out.println("No hits found for search term: "+argumentInput);
+		if(noResult) {
+			System.out.println("No hits found for search term: " + argumentInput);
 		}
 	}
 	
