@@ -1,4 +1,4 @@
-public class ListCmd extends LibraryCommand {
+public class SearchCmd extends LibraryCommand {
 	
 	private String argumentInput;
 	
@@ -10,8 +10,8 @@ public class ListCmd extends LibraryCommand {
 	 * @throws IllegalArgumentException if given arguments are invalid
 	 * @throws NullPointerException if any of the given parameters are null.
 	 */
-	public ListCmd(String argumentInput) {
-		super(CommandType.LIST, argumentInput);
+	public SearchCmd(String argumentInput) {
+		super(CommandType.SEARCH, argumentInput);
 	}
 	
 	@Override
@@ -20,11 +20,12 @@ public class ListCmd extends LibraryCommand {
 			return false;
 		}
 		
-		boolean result = argumentInput.equals("long") || argumentInput.equals("short") || argumentInput.equals("");
-		if(result) {
-			this.argumentInput = argumentInput;
+		if(argumentInput.contains(" ") || argumentInput.equals("")) {
+			return false;
 		}
-		return result;
+		
+		this.argumentInput = argumentInput;
+		return true;
 	}
 	
 	@Override
@@ -32,21 +33,17 @@ public class ListCmd extends LibraryCommand {
 		if(data == null || argumentInput == null) {
 			throw new NullPointerException("no entry");
 		}
-		System.out.println(data.getBookData().size() + " books in library:");
 		
-		if(argumentInput.equals("") || argumentInput.equals("short")) {
-			for(BookEntry i : data.getBookData()) {
+		boolean noResult = true;
+		for(BookEntry i : data.getBookData()) {
+			if(i.getTitle().toLowerCase().contains(argumentInput.toLowerCase())){
 				System.out.println(i.getTitle());
+				noResult=false;
 			}
 		}
-		
-		if(argumentInput.equals("long")) {
-			for(BookEntry i : data.getBookData()) {
-				System.out.println(i.toString());
-				System.out.print("\n");
-			}
+		if(noResult){
+			System.out.println("No hits found for search term: "+argumentInput);
 		}
-		
 	}
 	
 }

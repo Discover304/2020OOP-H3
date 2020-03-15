@@ -73,11 +73,11 @@ public class LibraryFileLoader {
 			System.err.println("ERROR: No content loaded before parsing.");
 			return theBookEntry;
 		}
-		for(String i : fileContent.subList(1,fileContent.size())) {//assume the first line is a title
+		for(String i : fileContent.subList(1, fileContent.size())) {//assume the first line is a title
 			String[] detailsOfBook = i.split(",");
 			
 			String title = detailsOfBook[0];
-			String[] authors = new String[] {detailsOfBook[1]};//.split(" ");//todo bug we need a list of authors not all authors in one String show as list
+			String[] authors = detailsOfBook[1].split("-");
 			float rating = Float.parseFloat(detailsOfBook[2]);
 			String ISBN = detailsOfBook[3];
 			int pages = Integer.parseInt(detailsOfBook[4]);
@@ -85,7 +85,7 @@ public class LibraryFileLoader {
 			BookEntry theBook = new BookEntry(title, authors, rating, ISBN, pages);
 			theBookEntry.add(theBook);
 		}
-
+		
 		return theBookEntry;
 	}
 	

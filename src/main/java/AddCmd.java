@@ -2,7 +2,7 @@ import java.nio.file.Path;
 
 public class AddCmd extends LibraryCommand {
 	
-	private Path parsedArgument;
+	private Path argumentInput;
 	
 	/**
 	 * Create the specified command and initialise it with
@@ -25,17 +25,17 @@ public class AddCmd extends LibraryCommand {
 		boolean result = true;
 		result = argumentInput.endsWith(".csv");
 		if(result) {
-			parsedArgument = Path.of(argumentInput);
+			this.argumentInput = Path.of(argumentInput);
 		}
 		return result;
 	}
 	
 	@Override
 	public void execute(LibraryData data) {
-		if(data == null) {
+		if(data == null || argumentInput == null) {
 			throw new NullPointerException("no entry");
 		}
-		data.loadData(parsedArgument);
+		data.loadData(argumentInput);
 	}
 	
 }
