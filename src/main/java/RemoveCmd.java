@@ -1,9 +1,11 @@
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class RemoveCmd extends LibraryCommand {
 	
+	/**
+	 * used to pass argument
+	 */
 	private String[] argumentInput;
 	
 	/**
@@ -28,9 +30,30 @@ public class RemoveCmd extends LibraryCommand {
 			return false;
 		}
 		
-		//scan for the header and the data
 		String[] parsedInput = new String[2];
+		if(! readStringContents(argumentInput, parsedInput)) {
+			return false;
+		}
+		
+		if(parsedInput[0].equals("AUTHOR") || parsedInput[0].equals("TITLE")) {
+			this.argumentInput = parsedInput;
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * read the content of a String and return false if error occur
+	 * @param argumentInput the input
+	 * @param parsedInput the variable to store value
+	 *
+	 * @return boolean value to show if the function work correctly
+	 */
+	private boolean readStringContents(String argumentInput, String[] parsedInput) {
 		Scanner scanner = new Scanner(argumentInput);
+		if(! scanner.hasNext()) {
+			return false;
+		}
 		parsedInput[0] = scanner.next();
 		if(! scanner.hasNext()) {
 			return false;
@@ -38,13 +61,7 @@ public class RemoveCmd extends LibraryCommand {
 		parsedInput[1] = scanner.nextLine();
 		scanner.close();
 		parsedInput[1] = parsedInput[1].substring(1);
-		
-		//pass value
-		if(parsedInput[0].equals("AUTHOR") || parsedInput[0].equals("TITLE")) {
-			this.argumentInput = parsedInput;
-			return true;
-		}
-		return false;
+		return true;
 	}
 	
 	@Override
@@ -56,47 +73,52 @@ public class RemoveCmd extends LibraryCommand {
 		switch (argumentInput[0]) {
 			case "TITLE": {
 				removeTitle(data);
+				break;
 			}
-			case "AUTHORS": {
+			case "AUTHOR": {
 				removeAuthor(data);
 			}
 		}
 	}
 	
+	/**
+	 * remove the data has the same title
+	 * @param data the input data
+	 */
 	private void removeTitle(LibraryData data) {
-		boolean result = false;
-		int removeIndex = 0;
-		for(int i = 0; i < data.getBookData().size(); i++) {
-			if(isTheTitle(data.getBookData().get(i))) {
-				result      = true;
-				removeIndex = i;
-				break;//assume only one book with the same name
+		for(BookEntry i : new ArrayList<>(data.getBookData())) {
+			if(isTheTitle(i)) {
+				data.getBookData().remove(i);
+				System.out.println(argumentInput[1] + ": removed successfully.");
+				return;//assume only one book with the same name
 			}
 		}
-		if(result) {
-			data.getBookData().remove(removeIndex);
-			System.out.println(argumentInput[1] + ": removed successfully.");
-		} else {
-			System.out.println(argumentInput[1] + ": not found.");
-		}
-		
+		System.out.println(argumentInput[1] + ": not found.");
 	}
 	
+	/**
+	 * see if the book is the one we want
+	 * @param theBook the book entry, waiting for judge
+	 *
+	 * @return a boolean to show the result
+	 */
 	private boolean isTheTitle(BookEntry theBook) {
 		return theBook.getTitle().equals(argumentInput[1]);
 	}
 	
+	/**
+	 * remove the book with the author
+	 * @param data the input data
+	 */
 	private void removeAuthor(LibraryData data) {
 		int counter = 0;
-		ArrayList<BookEntry> removedBook = new ArrayList<BookEntry>();
-		
-		for(int i = 0; i < data.getBookData().size(); i++) {
-			if(isTheAuthor(data.getBookData().get(i))) {
-				counter = counter + 1;
-				data.getBookData().remove(data.getBookData().get(i));
+		for(BookEntry i : new ArrayList<>(data.getBookData())) {
+			if(isTheAuthor(i)) {
+				data.getBookData().remove(i);
+				counter += 1;
 			}
 		}
-		System.out.println(counter + " removed for author: " + argumentInput[1]);
+		System.out.println(counter + " books removed for author: " + argumentInput[1]);
 	}
 	
 	/**
