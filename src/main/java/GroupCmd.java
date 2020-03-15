@@ -1,8 +1,5 @@
-import com.sun.source.tree.BreakTree;
-import com.sun.tools.jconsole.JConsoleContext;
-
-import javax.print.attribute.standard.PresentationDirection;
-import java.lang.reflect.Array;
+import java.awt.print.Book;
+import java.lang.management.BufferPoolMXBean;
 import java.util.*;
 
 public class GroupCmd extends LibraryCommand {
@@ -64,46 +61,35 @@ public class GroupCmd extends LibraryCommand {
 	}
 	
 	private void showByTitles(LibraryData data) {
-		HashMap<String, BookEntry> titleAndBooks = new HashMap<>();
-		HashMap<String, ArrayList<BookEntry>> grouping = new HashMap<>();
+		String[] sortedTitles = sortTitles(data);
 		
-		constructTitleMap(titleAndBooks, data);
-		constructCapitalMap(grouping, titleAndBooks);
+		HashMap<String, ArrayList<String>> grouping = new HashMap<>();
+		constructCapitalMap(grouping, sortedTitles);
 		
 		int theNumberOfGroups = 27;
 		for(int i = 0; i < theNumberOfGroups - 1; i++) {
 			String capitalNow = Character.toString('A' + i);
-			ArrayList<BookEntry> books = grouping.get(capitalNow);
+			ArrayList<String> books = grouping.get(capitalNow);
 			if(books.size() != 0) {
 				System.out.println("## " + capitalNow);
-				for(BookEntry j : books) {
-					System.out.println("	" + j.getTitle());
+				for(String j : books) {
+					System.out.println("	" + j);
 				}
 			}
 		}
-		grouping.put("[0-9]", new ArrayList<>());
-		
 	}
 	
-	private void constructTitleMap(HashMap<String, BookEntry> titleAndBook, LibraryData data) {
+	private String[] sortTitles(LibraryData data) {
 		ArrayList<String> theTitle = new ArrayList<>();
 		for(BookEntry i : data.getBookData()) {
 			theTitle.add(i.getTitle());
 		}
 		String[] sortedKeyMap = theTitle.toArray(new String[theTitle.size()]);
 		Arrays.sort(sortedKeyMap);
-		
-		for(String i : sortedKeyMap) {
-			for(BookEntry j : data.getBookData()) {
-				if(j.getTitle().equals(i)) {
-					titleAndBook.put(i, j);
-					break;
-				}
-			}
-		}
+		return sortedKeyMap;
 	}
 	
-	private void constructCapitalMap(HashMap<String, ArrayList<BookEntry>> grouping, HashMap<String, BookEntry> titleAndBook) {
+	private void constructCapitalMap(HashMap<String, ArrayList<String>> grouping, String[] sortedTitles) {
 		
 		//initialise capital and books
 		int theNumberOfGroups = 27;
@@ -113,54 +99,57 @@ public class GroupCmd extends LibraryCommand {
 		grouping.put("[0-9]", new ArrayList<>());
 		
 		//adding data
-		for(String i : titleAndBook.keySet()) {
+		for(String i : sortedTitles) {
 			for(String j : grouping.keySet()) {
 				if(Character.toString(i.toUpperCase().charAt(0)).equals(j)) {
-					grouping.get(j).add(titleAndBook.get(i));
+					grouping.get(j).add(i);
 				}
 			}
-			grouping.get("[0-9]").add(titleAndBook.get(i));
+			grouping.get("[0-9]").add(i);
 		}
 		
 	}
 	
 	private void showByAuthors(LibraryData data) {
-		HashMap<String, BookEntry> titleAndBooks = new HashMap<>();
-		HashMap<String, ArrayList<BookEntry>> grouping = new HashMap<>();
+		String[] sortedAuthors = sortAuthors(data);
 		
-		constructTitleMap(titleAndBooks, data);
-		constructFinalMap(grouping, titleAndBooks);
+		HashMap<String, String[]> groupedData = new HashMap<>();
+		grouping(groupedData, sortedAuthors, data);
 		
-		for(String i : grouping.keySet()) {
+		for(String i : sortedAuthors) {
 			System.out.println("## " + i);
-			for(BookEntry j : grouping.get(i)) {
-				System.out.println("	" + j.getTitle());
+			for(String j : groupedData.get(i)) {
+				System.out.println("	" + j);
 			}
 		}
 	}
 	
-	private void constructFinalMap(HashMap<String, ArrayList<BookEntry>> grouping, HashMap<String, BookEntry> titleAndBook) {
-		String[] sortedAuthors = getSortedAuthors(titleAndBook);
+	private void grouping(HashMap<String, String[]> groupedData, String[] sortedAuthors, LibraryData data) {
+		
+		HashMap<String, ArrayList<String>> tempGroup = new HashMap<>();
 		
 		//adding data
 		for(String i : sortedAuthors) {
-			grouping.put(i, new ArrayList<>());
-			for(String j : titleAndBook.keySet()) {
-				for(String authorFromData : titleAndBook.get(j).getAuthors()) {
+			tempGroup.put(i, new ArrayList<>());
+			for(BookEntry j : data.getBookData()) {
+				for(String authorFromData : j.getAuthors()) {
 					if(authorFromData.equals(i)) {
-						grouping.get(i).add(titleAndBook.get(j));
+						tempGroup.get(i).add(j.getTitle());
 						break;
 					}
 				}
 			}
+			String[] temp = tempGroup.get(i).toArray(new String[tempGroup.get(i).size()]);
+			Arrays.sort(temp);
+			groupedData.put(i,temp);
 		}
 	}
 	
-	private String[] getSortedAuthors(HashMap<String, BookEntry> titleAndBook) {
+	private String[] sortAuthors(LibraryData data) {
 		//initialise authors and books
 		HashSet<String> authors = new HashSet<>();
-		for (String i : titleAndBook.keySet()){
-			String[] authorsOfThisBook = titleAndBook.get(i).getAuthors();
+		for (BookEntry i : data.getBookData()){
+			String[] authorsOfThisBook = i.getAuthors();
 			Collections.addAll(authors, authorsOfThisBook);
 		}
 		
