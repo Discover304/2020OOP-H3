@@ -11,6 +11,11 @@ public class GroupCmd extends LibraryCommand {
     private String argumentInput;
 
     /**
+     * the last group name
+     */
+    private static final String THE_LAST_GROUP = "[0-9]";
+
+    /**
      * Create the specified command and initialise it with
      * the given command argument.
      * @param argumentInput argument input as expected by the extending subclass.
@@ -85,12 +90,18 @@ public class GroupCmd extends LibraryCommand {
         HashMap<String, ArrayList<String>> groupedData = new HashMap<>();
         groupingByTitle(groupedData, data);
 
+        String[] capitals = new String[groupedData.size()];
+        for (int i = 0; i < groupedData.size()-1; i++) {
+            String capitalNow = Character.toString('A' + i);
+            capitals[i] = capitalNow;
+        }
+        capitals[groupedData.size()-1] = THE_LAST_GROUP;
+
         //display the contents with the second sorting
         for (int i = 0; i < groupedData.size(); i++) {
-            String capitalNow = Character.toString('A' + i);
-            ArrayList<String> books = groupedData.get(capitalNow);
+            ArrayList<String> books = groupedData.get(capitals[i]);
             if (books.size() != 0) {
-                System.out.println("## " + capitalNow);
+                System.out.println("## " + capitals[i]);
                 for (String book : books) {
                     System.out.println("	" + book);
                 }
@@ -131,12 +142,16 @@ public class GroupCmd extends LibraryCommand {
 
         //adding data
         for (String title : sortedTitles) {
+            boolean isAdded = false;
             for (String capitalLetter : groupedData.keySet()) {
                 if (Character.toString(title.toUpperCase().charAt(0)).equals(capitalLetter)) {
                     groupedData.get(capitalLetter).add(title);
+                    isAdded = true;
                 }
             }
-            groupedData.get("[0-9]").add(title);
+            if (!isAdded) {
+                groupedData.get(THE_LAST_GROUP).add(title);
+            }
         }
 
     }
@@ -150,7 +165,7 @@ public class GroupCmd extends LibraryCommand {
         for (int i = 0; i < theNumberOfGroups - 1; i++) {
             groupedData.put(Character.toString('A' + i), new ArrayList<>());
         }
-        groupedData.put("[0-9]", new ArrayList<>());
+        groupedData.put(THE_LAST_GROUP, new ArrayList<>());
     }
 
     /**

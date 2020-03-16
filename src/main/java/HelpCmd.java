@@ -8,25 +8,24 @@ public class HelpCmd extends LibraryCommand {
 
     /**
      * Create a help command.
-     * 
      * @param argumentInput argument input is expected to be blank
+     *
      * @throws IllegalArgumentException if given arguments are invalid
      * @throws NullPointerException if the given argumentInput is null.
      */
     public HelpCmd(String argumentInput) {
         super(CommandType.HELP, argumentInput);
-        
+
         helpOutput = buildHelpOutput();
     }
 
     /**
      * Execute the help command. This prints the available commands
      * and corresponding usage to the console.
-     *
      * @param data book data to be considered for command execution.
-     */    
+     */
     @Override
-    public void execute(LibraryData data) {       
+    public void execute(LibraryData data) {
         System.out.println(helpOutput);
     }
 
@@ -44,5 +43,5 @@ public class HelpCmd extends LibraryCommand {
 
         return bld.toString();
     }
-    
+
 }

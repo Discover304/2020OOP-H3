@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 /**
- * The main library browser module which 
+ * The main library browser module which
  * runs the main loop and handles user input
  * and high level command creation and execution.
  */
@@ -11,8 +11,8 @@ public class LibraryBrowser {
     private final LibraryData data;
     /** Create and handle commands created via user input. */
     private final CommandInterpreter cmdIntrp;
-    /** 
-     * Used to read user input from StdIO. 
+    /**
+     * Used to read user input from StdIO.
      * Only close shortly before program exit.
      */
     private final Scanner stdInScan;
@@ -34,22 +34,22 @@ public class LibraryBrowser {
 
     /**
      * Main loop of the library browser programme.
-     * 
-     * It asks for user input via a command prompt, creates a 
+     * <p>
+     * It asks for user input via a command prompt, creates a
      * corresponding command and executes it.
      */
     private void mainLoop() {
-        boolean exit = false; 
+        boolean exit = false;
 
         System.out.println("\nEnter a library command or type " + CommandType.HELP + " for command overview.");
-        
-        while(!exit) {
+
+        while (!exit) {
             String inputLine = promptUser();
             if (inputLine == null) {
                 System.err.println("ERROR: User input could not be read successfully.");
                 continue;
             }
-            
+
             LibraryCommand command = cmdIntrp.parseCommand(inputLine);
             if (command == null) {
                 System.err.println("ERROR: Given command input is invalid: " + inputLine);
@@ -59,12 +59,12 @@ public class LibraryBrowser {
                 } else {
                     cmdIntrp.executeCommand(command, data);
                 }
-            }           
+            }
         }
     }
 
     /**
-     * Display user command prompt and 
+     * Display user command prompt and
      * read corresponding input from StdIn.
      * @return provided user input or null if stream problem
      */

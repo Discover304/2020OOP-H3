@@ -16,11 +16,12 @@ public class CommandInterpreter {
 
     /**
      * Parse given user input and create a corresponding library command.
-     * 
      * @param inputLine The input is expected to be a single line starting with a command
      * keyword followed by corresponding arguments.
-     * @return Command as specified in the given input line. If command creation 
+     *
+     * @return Command as specified in the given input line. If command creation
      * failed due to an illegal argument or command keyword, null will be returned.
+     *
      * @throws NullPointerException If the given input line is null.
      */
     public LibraryCommand parseCommand(String inputLine) {
@@ -42,9 +43,9 @@ public class CommandInterpreter {
 
     /**
      * Execute the given command.
-     * 
      * @param command Command to be executed.
      * @param data book data to be considered for command execution.
+     *
      * @throws NullPointerException If one of the given parameters is null.
      */
     public void executeCommand(LibraryCommand command, LibraryData data) {
@@ -58,7 +59,8 @@ public class CommandInterpreter {
      * Create a command from given keyword and argument input.
      * @param commandInput command keyword
      * @param argumentInput command argument
-     * @return Command as specified in the given input line. If command creation 
+     *
+     * @return Command as specified in the given input line. If command creation.
      * failed due to an illegal argument or command keyword, null will be returned.
      */
     private LibraryCommand setupCommand(String commandInput, String argumentInput) {
@@ -71,10 +73,11 @@ public class CommandInterpreter {
 
         return command;
     }
-    
+
     /**
      * Translate given command keyword to corresponding CommandType.
      * @param cmd command keyword
+     *
      * @return CommandType associated with given keyword or null if no
      * association was found.
      */

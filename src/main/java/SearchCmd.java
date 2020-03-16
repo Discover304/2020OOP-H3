@@ -1,5 +1,12 @@
+/**
+ * this is the class extends library command, used for execute command search
+ * find the required book in the library
+ */
 public class SearchCmd extends LibraryCommand {
-	
+
+	/**
+	 * passing argument
+	 */
 	private String argumentInput;
 	
 	/**
@@ -13,7 +20,13 @@ public class SearchCmd extends LibraryCommand {
 	public SearchCmd(String argumentInput) {
 		super(CommandType.SEARCH, argumentInput);
 	}
-	
+
+	/**
+	 * Parses the given command arguments and initialised necessary parameters.
+	 * @param argumentInput argument input for this command
+	 *
+	 * @return the result to show if the operation is done
+	 */
 	@Override
 	protected boolean parseArguments(String argumentInput) {
 		if(argumentInput == null) {
@@ -27,7 +40,11 @@ public class SearchCmd extends LibraryCommand {
 		this.argumentInput = argumentInput;
 		return true;
 	}
-	
+
+	/**
+	 * execute search command and print the result to console
+	 * @param data book data to be considered for command execution.
+	 */
 	@Override
 	public void execute(LibraryData data) {
 		if(data == null || argumentInput == null) {

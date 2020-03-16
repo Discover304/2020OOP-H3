@@ -2,6 +2,7 @@ import java.nio.file.Path;
 
 /**
  * this is the class extends library command, used for execute command ADD
+ * add list of book to the library
  */
 public class AddCmd extends LibraryCommand {
 
@@ -34,7 +35,7 @@ public class AddCmd extends LibraryCommand {
             throw new NullPointerException("no entry");
         }
 
-        boolean result = true;
+        boolean result;
         result = argumentInput.endsWith(".csv");
         if (result) {
             this.argumentInput = Path.of(argumentInput);
