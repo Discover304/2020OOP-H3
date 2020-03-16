@@ -125,7 +125,7 @@ public class BookEntry {
      * @return boolean value to see if the two book are equal
      */
     @Override
-    public boolean equals(Object o) {//todo code may be improved with this function
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }

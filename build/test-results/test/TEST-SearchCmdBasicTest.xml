@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="SearchCmdBasicTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2020-03-16T13:42:43" hostname="MSI-YANG" time="0.006">
+  <properties/>
+  <testcase name="testExecuteFindWordMatch" classname="SearchCmdBasicTest" time="0.001"/>
+  <testcase name="testExecuteFindNoMatch" classname="SearchCmdBasicTest" time="0.002"/>
+  <testcase name="testExecuteFindExactMatch" classname="SearchCmdBasicTest" time="0.0"/>
+  <testcase name="testParseArgumentsIllegalArgument" classname="SearchCmdBasicTest" time="0.001"/>
+  <testcase name="testParseArgumentsLegalArgument" classname="SearchCmdBasicTest" time="0.0"/>
+  <testcase name="testExecuteLibraryDataNull" classname="SearchCmdBasicTest" time="0.0"/>
+  <testcase name="testIsParseArgumentsOverridden" classname="SearchCmdBasicTest" time="0.001"/>
+  <testcase name="testCtorSuperclassCall" classname="SearchCmdBasicTest" time="0.0"/>
+  <testcase name="testClassCommandExtension" classname="SearchCmdBasicTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

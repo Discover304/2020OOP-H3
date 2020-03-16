@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="LibraryFileLoaderBasicTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2020-03-16T13:42:43" hostname="MSI-YANG" time="0.003">
+  <properties/>
+  <testcase name="testParseFileContentNoContentLoadedConsoleOutput" classname="LibraryFileLoaderBasicTest" time="0.001"/>
+  <testcase name="testParseFileContentReturnTypeIsArrayList" classname="LibraryFileLoaderBasicTest" time="0.001"/>
+  <testcase name="testParseFileContentResult" classname="LibraryFileLoaderBasicTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

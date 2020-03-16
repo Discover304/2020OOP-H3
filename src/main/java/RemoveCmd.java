@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -101,7 +102,7 @@ public class RemoveCmd extends LibraryCommand {
      * @param data the input data
      */
     private void removeTitle(LibraryData data) {
-        for (BookEntry book : data.getBookData()) {
+        for (BookEntry book :  new ArrayList<>(data.getBookData())) {
             if (isTheTitle(book)) {
                 data.getBookData().remove(book);
                 System.out.println(argumentInput[1] + ": removed successfully.");
@@ -127,7 +128,7 @@ public class RemoveCmd extends LibraryCommand {
      */
     private void removeAuthor(LibraryData data) {
         int counter = 0;
-        for (BookEntry book : data.getBookData()) {
+        for (BookEntry book : new ArrayList<>(data.getBookData())) {
             if (isTheAuthor(book)) {
                 data.getBookData().remove(book);
                 counter += 1;

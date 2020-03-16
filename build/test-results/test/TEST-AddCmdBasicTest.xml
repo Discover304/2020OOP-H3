@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="AddCmdBasicTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2020-03-16T13:42:42" hostname="MSI-YANG" time="0.061">
+  <properties/>
+  <testcase name="testExecuteLoadData" classname="AddCmdBasicTest" time="0.033"/>
+  <testcase name="testParseArgumentsIllegalArgument" classname="AddCmdBasicTest" time="0.014"/>
+  <testcase name="testParseArgumentsLegalArgument" classname="AddCmdBasicTest" time="0.001"/>
+  <testcase name="testExecuteLibraryDataNull" classname="AddCmdBasicTest" time="0.002"/>
+  <testcase name="testIsParseArgumentsOverridden" classname="AddCmdBasicTest" time="0.001"/>
+  <testcase name="testCtorSuperclassCall" classname="AddCmdBasicTest" time="0.0"/>
+  <testcase name="testClassCommandExtension" classname="AddCmdBasicTest" time="0.004"/>
+  <system-out><![CDATA[2 new book entries added.
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

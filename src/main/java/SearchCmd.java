@@ -52,9 +52,9 @@ public class SearchCmd extends LibraryCommand {
 		}
 		
 		boolean noResult = true;
-		for(BookEntry i : data.getBookData()) {
-			if(i.getTitle().toLowerCase().contains(argumentInput.toLowerCase())) {
-				System.out.println(i.getTitle());
+		for(BookEntry book : data.getBookData()) {
+			if(book.getTitle().toLowerCase().contains(argumentInput.toLowerCase())) {
+				System.out.println(book.getTitle());
 				noResult = false;
 			}
 		}
