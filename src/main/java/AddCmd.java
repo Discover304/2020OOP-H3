@@ -1,7 +1,13 @@
 import java.nio.file.Path;
 
+/**
+ * this is the class extends library command, used for execute command ADD
+ */
 public class AddCmd extends LibraryCommand {
 
+    /**
+     * passing argument
+     */
     private Path argumentInput;
 
     /**
@@ -36,6 +42,10 @@ public class AddCmd extends LibraryCommand {
         return result;
     }
 
+    /**
+     * execute ADD command to add some book to the library
+     * @param data book data to be considered for command execution.
+     */
     @Override
     public void execute(LibraryData data) {
         if (data == null || argumentInput == null) {
