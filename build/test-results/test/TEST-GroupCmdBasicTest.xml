@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="GroupCmdBasicTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2020-03-16T13:42:43" hostname="MSI-YANG" time="0.019">
+<testsuite name="GroupCmdBasicTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2020-03-18T16:28:57" hostname="MSI-YANG" time="0.011">
   <properties/>
-  <testcase name="testExecuteGroupByAuthorGroups" classname="GroupCmdBasicTest" time="0.006"/>
+  <testcase name="testExecuteGroupByAuthorGroups" classname="GroupCmdBasicTest" time="0.002"/>
   <testcase name="testExecuteGroupByAuthorHeader" classname="GroupCmdBasicTest" time="0.001"/>
   <testcase name="testExecuteGroupByTitleGroups" classname="GroupCmdBasicTest" time="0.002"/>
   <testcase name="testExecuteGroupByTitleHeader" classname="GroupCmdBasicTest" time="0.001"/>
   <testcase name="testExecuteGroupByAuthorLines" classname="GroupCmdBasicTest" time="0.001"/>
-  <testcase name="testExecuteEmptyBookData" classname="GroupCmdBasicTest" time="0.0"/>
+  <testcase name="testExecuteEmptyBookData" classname="GroupCmdBasicTest" time="0.001"/>
   <testcase name="testParseArgumentsIllegalArgument" classname="GroupCmdBasicTest" time="0.0"/>
   <testcase name="testParseArgumentsLegalArgument" classname="GroupCmdBasicTest" time="0.0"/>
-  <testcase name="testExecuteGroupByTitleLines" classname="GroupCmdBasicTest" time="0.001"/>
-  <testcase name="testExecuteLibraryDataNull" classname="GroupCmdBasicTest" time="0.0"/>
-  <testcase name="testIsParseArgumentsOverridden" classname="GroupCmdBasicTest" time="0.001"/>
+  <testcase name="testExecuteGroupByTitleLines" classname="GroupCmdBasicTest" time="0.0"/>
+  <testcase name="testExecuteLibraryDataNull" classname="GroupCmdBasicTest" time="0.001"/>
+  <testcase name="testIsParseArgumentsOverridden" classname="GroupCmdBasicTest" time="0.0"/>
   <testcase name="testCtorSuperclassCall" classname="GroupCmdBasicTest" time="0.0"/>
-  <testcase name="testClassCommandExtension" classname="GroupCmdBasicTest" time="0.001"/>
+  <testcase name="testClassCommandExtension" classname="GroupCmdBasicTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

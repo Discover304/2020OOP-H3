@@ -91,11 +91,11 @@ public class GroupCmd extends LibraryCommand {
         groupingByTitle(groupedData, data);
 
         String[] capitals = new String[groupedData.size()];
-        for (int i = 0; i < groupedData.size()-1; i++) {
+        for (int i = 0; i < groupedData.size() - 1; i++) {
             String capitalNow = Character.toString('A' + i);
             capitals[i] = capitalNow;
         }
-        capitals[groupedData.size()-1] = THE_LAST_GROUP;
+        capitals[groupedData.size() - 1] = THE_LAST_GROUP;
 
         //display the contents with the second sorting
         for (int i = 0; i < groupedData.size(); i++) {
@@ -110,26 +110,6 @@ public class GroupCmd extends LibraryCommand {
     }
 
     /**
-     * sorting titles
-     * @param data data input
-     *
-     * @return give back a sorted title list
-     */
-    private String[] sortTitles(LibraryData data) {
-
-        //initialise title
-        ArrayList<String> theTitle = new ArrayList<>();
-        for (BookEntry book : data.getBookData()) {
-            theTitle.add(book.getTitle());
-        }
-
-        //sorting
-        String[] sortedTitles = theTitle.toArray(new String[theTitle.size()]);
-        Arrays.sort(sortedTitles);
-        return sortedTitles;
-    }
-
-    /**
      * assigning the input data by title
      * @param groupedData the thing that keep data
      * @param data the input data
@@ -137,7 +117,7 @@ public class GroupCmd extends LibraryCommand {
     private void groupingByTitle(HashMap<String, ArrayList<String>> groupedData, LibraryData data) {
 
         //initialise the required data
-        String[] sortedTitles = sortTitles(data);
+        ArrayList<String> sortedTitles = sortTitles(data);
         titleGroupedDataInitialising(groupedData);
 
         //adding data
@@ -153,7 +133,25 @@ public class GroupCmd extends LibraryCommand {
                 groupedData.get(THE_LAST_GROUP).add(title);
             }
         }
+    }
 
+    /**
+     * sorting titles
+     * @param data data input
+     *
+     * @return give back a sorted title list
+     */
+    private ArrayList<String> sortTitles(LibraryData data) {
+
+        //initialise title
+        ArrayList<String> sortedTitles = new ArrayList<>();
+        for (BookEntry book : data.getBookData()) {
+            sortedTitles.add(book.getTitle());
+        }
+
+        //sorting
+        Collections.sort(sortedTitles);
+        return sortedTitles;
     }
 
     /**
@@ -175,7 +173,7 @@ public class GroupCmd extends LibraryCommand {
     private void showByAuthors(LibraryData data) {
 
         //initialise the required data
-        HashMap<String, String[]> groupedData = new HashMap<>();
+        HashMap<String, ArrayList<String>> groupedData = new HashMap<>();
         groupingByAuthor(groupedData, data);
 
         //display the contents
@@ -214,30 +212,27 @@ public class GroupCmd extends LibraryCommand {
      * @param groupedData the thing that keep data
      * @param data the input data
      */
-    private void groupingByAuthor(HashMap<String, String[]> groupedData, LibraryData data) {
+    private void groupingByAuthor(HashMap<String, ArrayList<String>> groupedData, LibraryData data) {
 
         //initialise the required data
         String[] sortedAuthors = sortAuthors(data);
-        HashMap<String, ArrayList<String>> tempGroup = new HashMap<>();
 
         //initialising and adding data
         for (String author : sortedAuthors) {
-            tempGroup.put(author, new ArrayList<>());
+            groupedData.put(author, new ArrayList<>());
 
             //adding data to temp
             for (BookEntry book : data.getBookData()) {
                 for (String authorFromData : book.getAuthors()) {
                     if (authorFromData.equals(author)) {
-                        tempGroup.get(author).add(book.getTitle());
+                        groupedData.get(author).add(book.getTitle());
                         break;
                     }
                 }
             }
 
             //sorting for second time of temp
-            String[] temp = tempGroup.get(author).toArray(new String[tempGroup.get(author).size()]);
-            Arrays.sort(temp);
-            groupedData.put(author, temp);
+            Collections.sort(groupedData.get(author));
         }
     }
 }
