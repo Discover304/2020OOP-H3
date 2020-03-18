@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="SearchCmdBasicTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2020-03-18T16:28:57" hostname="MSI-YANG" time="0.005">
+<testsuite name="SearchCmdBasicTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2020-03-18T17:42:10" hostname="MSI-YANG" time="0.009">
   <properties/>
   <testcase name="testExecuteFindWordMatch" classname="SearchCmdBasicTest" time="0.002"/>
-  <testcase name="testExecuteFindNoMatch" classname="SearchCmdBasicTest" time="0.001"/>
+  <testcase name="testExecuteFindNoMatch" classname="SearchCmdBasicTest" time="0.002"/>
   <testcase name="testExecuteFindExactMatch" classname="SearchCmdBasicTest" time="0.0"/>
-  <testcase name="testParseArgumentsIllegalArgument" classname="SearchCmdBasicTest" time="0.0"/>
-  <testcase name="testParseArgumentsLegalArgument" classname="SearchCmdBasicTest" time="0.001"/>
-  <testcase name="testExecuteLibraryDataNull" classname="SearchCmdBasicTest" time="0.0"/>
+  <testcase name="testParseArgumentsIllegalArgument" classname="SearchCmdBasicTest" time="0.003"/>
+  <testcase name="testParseArgumentsLegalArgument" classname="SearchCmdBasicTest" time="0.0"/>
+  <testcase name="testExecuteLibraryDataNull" classname="SearchCmdBasicTest" time="0.001"/>
   <testcase name="testIsParseArgumentsOverridden" classname="SearchCmdBasicTest" time="0.0"/>
   <testcase name="testCtorSuperclassCall" classname="SearchCmdBasicTest" time="0.0"/>
   <testcase name="testClassCommandExtension" classname="SearchCmdBasicTest" time="0.0"/>

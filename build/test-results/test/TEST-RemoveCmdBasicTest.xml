@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="RemoveCmdBasicTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2020-03-18T16:28:57" hostname="MSI-YANG" time="0.03">
+<testsuite name="RemoveCmdBasicTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2020-03-18T17:42:10" hostname="MSI-YANG" time="0.077">
   <properties/>
-  <testcase name="testExecuteRemoveAuthorConsoleOut" classname="RemoveCmdBasicTest" time="0.01"/>
-  <testcase name="testExecuteNotFound" classname="RemoveCmdBasicTest" time="0.002"/>
+  <testcase name="testExecuteRemoveAuthorConsoleOut" classname="RemoveCmdBasicTest" time="0.024"/>
+  <testcase name="testExecuteNotFound" classname="RemoveCmdBasicTest" time="0.003"/>
   <testcase name="testExecuteRemoveAuthor" classname="RemoveCmdBasicTest" time="0.001"/>
-  <testcase name="testExecuteRemoveTitle" classname="RemoveCmdBasicTest" time="0.001"/>
-  <testcase name="testParseArgumentsIllegalArgument" classname="RemoveCmdBasicTest" time="0.001"/>
-  <testcase name="testExecuteRemoveTitleConsoleOut" classname="RemoveCmdBasicTest" time="0.0"/>
-  <testcase name="testParseArgumentsLegalArgument" classname="RemoveCmdBasicTest" time="0.012"/>
-  <testcase name="testExecuteLibraryDataNull" classname="RemoveCmdBasicTest" time="0.0"/>
+  <testcase name="testExecuteRemoveTitle" classname="RemoveCmdBasicTest" time="0.002"/>
+  <testcase name="testParseArgumentsIllegalArgument" classname="RemoveCmdBasicTest" time="0.005"/>
+  <testcase name="testExecuteRemoveTitleConsoleOut" classname="RemoveCmdBasicTest" time="0.001"/>
+  <testcase name="testParseArgumentsLegalArgument" classname="RemoveCmdBasicTest" time="0.03"/>
+  <testcase name="testExecuteLibraryDataNull" classname="RemoveCmdBasicTest" time="0.001"/>
   <testcase name="testIsParseArgumentsOverridden" classname="RemoveCmdBasicTest" time="0.001"/>
-  <testcase name="testCtorSuperclassCall" classname="RemoveCmdBasicTest" time="0.0"/>
+  <testcase name="testCtorSuperclassCall" classname="RemoveCmdBasicTest" time="0.001"/>
   <testcase name="testClassCommandExtension" classname="RemoveCmdBasicTest" time="0.001"/>
   <system-out><![CDATA[1 books removed for author: AuthorB
 TitleB: removed successfully.
