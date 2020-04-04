@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 /**
  * this is the class extends library command, used for execute command List
  * displaying a list of the content of the library
@@ -8,6 +10,16 @@ public class ListCmd extends LibraryCommand {
      * passing argument
      */
     private String argumentInput;
+
+    /**
+     * long option
+     */
+    private final String LONG_OPTION = "long";
+
+    /**
+     * short option
+     */
+    private final String SHORT_OPTION = "short";
 
     /**
      * Create the specified command and initialise it with
@@ -29,16 +41,14 @@ public class ListCmd extends LibraryCommand {
      */
     @Override
     protected boolean parseArguments(String argumentInput) {
-        if (argumentInput == null) {
-            return false;
-        }
+        Objects.requireNonNull(argumentInput, "no entry");
 
         argumentInput = argumentInput.trim();
-        boolean result = argumentInput.equals("long") || argumentInput.equals("short") || argumentInput.equals("");
-        if (result) {
-            this.argumentInput = argumentInput.trim();
+        if (argumentInput.equals(LONG_OPTION) || argumentInput.equals(SHORT_OPTION) || argumentInput.equals("")) {
+            this.argumentInput = argumentInput;
+            return true;
         }
-        return result;
+        return false;
     }
 
     /**
@@ -47,24 +57,32 @@ public class ListCmd extends LibraryCommand {
      */
     @Override
     public void execute(LibraryData data) {
-        if (data == null || argumentInput == null) {
-            throw new NullPointerException("no entry");
-        }
-        System.out.println(data.getBookData().size() + " books in library:");
+        Objects.requireNonNull(argumentInput, "no entry");
+        Objects.requireNonNull(data, "no entry");
 
-        if (argumentInput.equals("") || argumentInput.equals("short")) {
-            for (BookEntry i : data.getBookData()) {
-                System.out.println(i.getTitle());
+        int sizeOfLibrary = data.getBookData().size();
+        if(sizeOfLibrary ==0) {
+            System.out.println("The library has no book entries.");
+            return;
+        }
+        else {
+            System.out.println(sizeOfLibrary + " books in library:");
+        }
+
+        switch (argumentInput){
+            case "" :
+            case SHORT_OPTION:{
+                for (BookEntry i : data.getBookData()) {
+                    System.out.println(i.getTitle());
+                }
+                break;
+            }
+            case LONG_OPTION :{
+                for (BookEntry i : data.getBookData()) {
+                    System.out.println(i.toString());
+                    System.out.print("\n");
+                }
             }
         }
-
-        if (argumentInput.equals("long")) {
-            for (BookEntry i : data.getBookData()) {
-                System.out.println(i.toString());
-                System.out.print("\n");
-            }
-        }
-
     }
-
 }

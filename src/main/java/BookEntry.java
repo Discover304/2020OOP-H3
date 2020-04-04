@@ -7,6 +7,21 @@ import java.util.Objects;
 public class BookEntry {
 
     /**
+     * the lowest rating
+     */
+    public final int LOWEST_RATING = 0;
+
+    /**
+     * the highest rating
+     */
+    public final int HIGHEST_RATING = 5;
+
+    /**
+     * the lowest number of page
+     */
+    public final int LOWEST_PAGE_NUMBER = 0;
+
+    /**
      * this is the title of the book
      */
     private final String title;
@@ -41,7 +56,7 @@ public class BookEntry {
             throw new NullPointerException("no book entry");
         }
 
-        if (pages < 0 || rating < 0 || rating > 5) {
+        if (pages < LOWEST_PAGE_NUMBER || rating < LOWEST_RATING || rating > HIGHEST_RATING) {
             throw new IllegalArgumentException("invalid entry");
         }
 

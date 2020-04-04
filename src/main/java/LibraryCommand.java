@@ -10,6 +10,16 @@ public abstract class LibraryCommand {
     private CommandType type;
 
     /**
+     * title control
+     */
+    public final String TITLE = "TITLE";
+
+    /**
+     * author control
+     */
+    public final String AUTHOR = "AUTHOR";
+
+    /**
      * Create the specified command and initialise it with
      * the given command argument.
      * @param type specific command type

@@ -1,4 +1,5 @@
 import java.nio.file.Path;
+import java.util.Objects;
 
 /**
  * this is the class extends library command, used for execute command ADD
@@ -31,8 +32,10 @@ public class AddCmd extends LibraryCommand {
      */
     @Override
     protected boolean parseArguments(String argumentInput) {
-        if (argumentInput == null) {
-            throw new NullPointerException("no entry");
+        Objects.requireNonNull(argumentInput,"no entry");
+
+        if (argumentInput.equals("")) {
+            return false;
         }
 
         boolean result;
@@ -49,9 +52,7 @@ public class AddCmd extends LibraryCommand {
      */
     @Override
     public void execute(LibraryData data) {
-        if (data == null || argumentInput == null) {
-            throw new NullPointerException("no entry");
-        }
+        Objects.requireNonNull(data,"no entry");
         data.loadData(argumentInput);
     }
 

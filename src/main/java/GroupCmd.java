@@ -11,9 +11,15 @@ public class GroupCmd extends LibraryCommand {
     private String argumentInput;
 
     /**
-     * the last group name
+     * the number of group by title
      */
-    private static final String THE_LAST_GROUP = "[0-9]";
+    private final int THE_NUMBER_OF_GROUPS = 27;
+
+    /**
+     * char indicate the last group
+     * '[' is because this is the char behind 'A'
+     */
+    private final char THE_LAST_GROUP_INDICATOR = '[';
 
     /**
      * Create the specified command and initialise it with
@@ -35,17 +41,14 @@ public class GroupCmd extends LibraryCommand {
      */
     @Override
     protected boolean parseArguments(String argumentInput) {
-        if (argumentInput == null) {
-            throw new NullPointerException("no entry");
-        }
+        Objects.requireNonNull(argumentInput, "no entry");
 
         if (argumentInput.equals("")) {
             return false;
         }
 
         argumentInput = argumentInput.trim();
-
-        if (argumentInput.equals("AUTHOR") || argumentInput.equals("TITLE")) {
+        if (argumentInput.equals(AUTHOR) || argumentInput.equals(TITLE)) {
             this.argumentInput = argumentInput;
             return true;
         }
@@ -58,9 +61,8 @@ public class GroupCmd extends LibraryCommand {
      */
     @Override
     public void execute(LibraryData data) {
-        if (data == null || argumentInput == null) {
-            throw new NullPointerException("no entry");
-        }
+        Objects.requireNonNull(data, "no entry");
+        Objects.requireNonNull(argumentInput, "no entry");
 
         if (data.getBookData().size() == 0) {
             System.out.println("The library has no book entries.");
@@ -70,11 +72,11 @@ public class GroupCmd extends LibraryCommand {
         //switch to different methods
         System.out.println("Grouped data by " + argumentInput);
         switch (argumentInput) {
-            case "TITLE": {
+            case TITLE: {
                 showByTitles(data);
                 break;
             }
-            case "AUTHOR": {
+            case AUTHOR: {
                 showByAuthors(data);
             }
         }
@@ -87,21 +89,20 @@ public class GroupCmd extends LibraryCommand {
     private void showByTitles(LibraryData data) {
 
         //initialise the required data
-        HashMap<String, ArrayList<String>> groupedData = new HashMap<>();
+        HashMap<Character, ArrayList<String>> groupedData = new HashMap<>();
         groupingByTitle(groupedData, data);
 
-        String[] capitals = new String[groupedData.size()];
-        for (int i = 0; i < groupedData.size() - 1; i++) {
-            String capitalNow = Character.toString('A' + i);
-            capitals[i] = capitalNow;
-        }
-        capitals[groupedData.size() - 1] = THE_LAST_GROUP;
-
         //display the contents with the second sorting
-        for (int i = 0; i < groupedData.size(); i++) {
-            ArrayList<String> books = groupedData.get(capitals[i]);
+        for (int i = 0; i < THE_NUMBER_OF_GROUPS; i++) {
+            char capitals = (char) ('A' + i);
+            ArrayList<String> books = groupedData.get(capitals);
             if (books.size() != 0) {
-                System.out.println("## " + capitals[i]);
+                if (capitals == THE_LAST_GROUP_INDICATOR) {
+                    String THE_LAST_GROUP = "[0-9]";
+                    System.out.println("## " + THE_LAST_GROUP);
+                } else {
+                    System.out.println("## " + capitals);
+                }
                 for (String book : books) {
                     System.out.println("	" + book);
                 }
@@ -114,23 +115,23 @@ public class GroupCmd extends LibraryCommand {
      * @param groupedData the thing that keep data
      * @param data the input data
      */
-    private void groupingByTitle(HashMap<String, ArrayList<String>> groupedData, LibraryData data) {
+    private void groupingByTitle(HashMap<Character, ArrayList<String>> groupedData, LibraryData data) {
 
         //initialise the required data
         ArrayList<String> sortedTitles = sortTitles(data);
-        titleGroupedDataInitialising(groupedData);
 
-        //adding data
-        for (String title : sortedTitles) {
-            boolean isAdded = false;
-            for (String capitalLetter : groupedData.keySet()) {
-                if (Character.toString(title.toUpperCase().charAt(0)).equals(capitalLetter)) {
+        for (int i = 0; i < THE_NUMBER_OF_GROUPS; i++) {
+            char capitalLetter = (char) ('A' + i);
+            groupedData.put(capitalLetter, new ArrayList<>());
+
+            //adding data
+            for (String title : sortedTitles) {
+                if (capitalLetter == THE_LAST_GROUP_INDICATOR && Character.isDigit(title.toUpperCase().charAt(0))) {
                     groupedData.get(capitalLetter).add(title);
-                    isAdded = true;
                 }
-            }
-            if (!isAdded) {
-                groupedData.get(THE_LAST_GROUP).add(title);
+                if (title.toUpperCase().charAt(0) == capitalLetter) {
+                    groupedData.get(capitalLetter).add(title);
+                }
             }
         }
     }
@@ -155,34 +156,48 @@ public class GroupCmd extends LibraryCommand {
     }
 
     /**
-     * initialise capital and books or the grouped data variable
-     * @param groupedData used to pass value
-     */
-    private void titleGroupedDataInitialising(HashMap<String, ArrayList<String>> groupedData) {
-        int theNumberOfGroups = 27;
-        for (int i = 0; i < theNumberOfGroups - 1; i++) {
-            groupedData.put(Character.toString('A' + i), new ArrayList<>());
-        }
-        groupedData.put(THE_LAST_GROUP, new ArrayList<>());
-    }
-
-    /**
      * show the grouped author list
      * @param data input data
      */
     private void showByAuthors(LibraryData data) {
 
         //initialise the required data
+        String[] sortedAuthors = sortAuthors(data);
         HashMap<String, ArrayList<String>> groupedData = new HashMap<>();
-        groupingByAuthor(groupedData, data);
+        groupingByAuthor(groupedData, data, sortedAuthors);
 
         //display the contents
-        String[] sortedAuthors = sortAuthors(data);
         for (String author : sortedAuthors) {
             System.out.println("## " + author);
             for (String title : groupedData.get(author)) {
                 System.out.println("	" + title);
             }
+        }
+    }
+
+    /**
+     * assigning the input data
+     * @param groupedData the thing that keep data
+     * @param data the input data
+     */
+    private void groupingByAuthor(HashMap<String, ArrayList<String>> groupedData, LibraryData data, String[] sortedAuthors) {
+
+        //initialising and adding data
+        for (String author : sortedAuthors) {
+            groupedData.put(author, new ArrayList<>());
+
+            //adding data to temp
+            for (BookEntry book : data.getBookData()) {
+                for (String authorFromData : book.getAuthors()) {
+                    if (authorFromData.equals(author)) {
+                        groupedData.get(author).add(book.getTitle());
+                        break;
+                    }
+                }
+            }
+
+            //sorting for second time of temp
+            Collections.sort(groupedData.get(author));
         }
     }
 
@@ -205,34 +220,5 @@ public class GroupCmd extends LibraryCommand {
         String[] sortedAuthors = authors.toArray(new String[authors.size()]);
         Arrays.sort(sortedAuthors);
         return sortedAuthors;
-    }
-
-    /**
-     * assigning the input data
-     * @param groupedData the thing that keep data
-     * @param data the input data
-     */
-    private void groupingByAuthor(HashMap<String, ArrayList<String>> groupedData, LibraryData data) {
-
-        //initialise the required data
-        String[] sortedAuthors = sortAuthors(data);
-
-        //initialising and adding data
-        for (String author : sortedAuthors) {
-            groupedData.put(author, new ArrayList<>());
-
-            //adding data to temp
-            for (BookEntry book : data.getBookData()) {
-                for (String authorFromData : book.getAuthors()) {
-                    if (authorFromData.equals(author)) {
-                        groupedData.get(author).add(book.getTitle());
-                        break;
-                    }
-                }
-            }
-
-            //sorting for second time of temp
-            Collections.sort(groupedData.get(author));
-        }
     }
 }

@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.Objects;
 
 /**
  * this is the class extends library command, used for execute command remove
@@ -10,7 +10,12 @@ public class RemoveCmd extends LibraryCommand {
     /**
      * used to pass argument
      */
-    private String[] argumentInput;
+    private String option;
+
+    /**
+     * the entry waiting for remove
+     */
+    private String removeValue;
 
     /**
      * Create the specified command and initialise it with
@@ -32,48 +37,23 @@ public class RemoveCmd extends LibraryCommand {
      */
     @Override
     protected boolean parseArguments(String argumentInput) {
-        if (argumentInput == null) {
-            throw new NullPointerException("no entry");
-        }
+        Objects.requireNonNull(argumentInput, "no entry");
 
         if (argumentInput.equals("")) {
             return false;
         }
 
+        String separator = " ";
         argumentInput = argumentInput.trim();
+        if (argumentInput.contains(separator)) {
+            int separateIndex = argumentInput.indexOf(separator);
 
-        String[] parsedInput = new String[2];
-        if (!readStringContents(argumentInput, parsedInput)) {
-            return false;
-        }
-
-        if (parsedInput[0].equals("AUTHOR") || parsedInput[0].equals("TITLE")) {
-            this.argumentInput = parsedInput;
+            option = argumentInput.substring(0, separateIndex);
+            removeValue = argumentInput.substring(separateIndex + 1);
             return true;
-        }
-        return false;
-    }
-
-    /**
-     * read the content of a String and return false if error occur
-     * @param argumentInput the input
-     * @param parsedInput the variable to store value
-     *
-     * @return boolean value to show if the function work correctly
-     */
-    private boolean readStringContents(String argumentInput, String[] parsedInput) {
-        Scanner scanner = new Scanner(argumentInput);
-        if (!scanner.hasNext()) {
+        } else {
             return false;
         }
-        parsedInput[0] = scanner.next();
-        if (!scanner.hasNext()) {
-            return false;
-        }
-        parsedInput[1] = scanner.nextLine();
-        scanner.close();
-        parsedInput[1] = parsedInput[1].substring(1);
-        return true;
     }
 
     /**
@@ -82,16 +62,16 @@ public class RemoveCmd extends LibraryCommand {
      */
     @Override
     public void execute(LibraryData data) {
-        if (data == null || argumentInput == null) {
-            throw new NullPointerException("no entry");
-        }
+        Objects.requireNonNull(data, "no entry");
+        Objects.requireNonNull(option, "no entry");
+        Objects.requireNonNull(removeValue, "no entry");
 
-        switch (argumentInput[0]) {
-            case "TITLE": {
+        switch (option) {
+            case TITLE: {
                 removeTitle(data);
                 break;
             }
-            case "AUTHOR": {
+            case AUTHOR: {
                 removeAuthor(data);
             }
         }
@@ -102,14 +82,14 @@ public class RemoveCmd extends LibraryCommand {
      * @param data the input data
      */
     private void removeTitle(LibraryData data) {
-        for (BookEntry book :  new ArrayList<>(data.getBookData())) {
+        for (BookEntry book : new ArrayList<>(data.getBookData())) {
             if (isTheTitle(book)) {
                 data.getBookData().remove(book);
-                System.out.println(argumentInput[1] + ": removed successfully.");
+                System.out.println(removeValue + ": removed successfully.");
                 return;//assume only one book with the same name
             }
         }
-        System.out.println(argumentInput[1] + ": not found.");
+        System.out.println(removeValue + ": not found.");
     }
 
     /**
@@ -119,7 +99,7 @@ public class RemoveCmd extends LibraryCommand {
      * @return a boolean to show the result
      */
     private boolean isTheTitle(BookEntry theBook) {
-        return theBook.getTitle().equals(argumentInput[1]);
+        return theBook.getTitle().equals(removeValue);
     }
 
     /**
@@ -134,7 +114,7 @@ public class RemoveCmd extends LibraryCommand {
                 counter += 1;
             }
         }
-        System.out.println(counter + " books removed for author: " + argumentInput[1]);
+        System.out.println(counter + " books removed for author: " + removeValue);
     }
 
     /**
@@ -144,12 +124,8 @@ public class RemoveCmd extends LibraryCommand {
      * @return bool the result
      */
     private boolean isTheAuthor(BookEntry theBook) {
-        if (theBook == null || argumentInput == null) {
-            throw new NullPointerException("no entry");
-        }
-
         for (String author : theBook.getAuthors()) {
-            if (argumentInput[1].equals(author)) {
+            if (removeValue.equals(author)) {
                 return true;
             }
         }

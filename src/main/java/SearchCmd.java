@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 /**
  * this is the class extends library command, used for execute command search
  * find the required book in the library
@@ -29,9 +31,7 @@ public class SearchCmd extends LibraryCommand {
 	 */
 	@Override
 	protected boolean parseArguments(String argumentInput) {
-		if(argumentInput == null) {
-			return false;
-		}
+		Objects.requireNonNull(argumentInput, "no entry");
 		
 		if(argumentInput.contains(" ") || argumentInput.equals("")) {
 			return false;
@@ -50,7 +50,7 @@ public class SearchCmd extends LibraryCommand {
 		if(data == null || argumentInput == null) {
 			throw new NullPointerException("no entry");
 		}
-		
+
 		boolean noResult = true;
 		for(BookEntry book : data.getBookData()) {
 			if(book.getTitle().toLowerCase().contains(argumentInput.toLowerCase())) {
